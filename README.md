@@ -1,5 +1,9 @@
 # Senzing with ElasticSearch (PROTOTYPE)
 
+## :no_entry: Deprecated
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ## Overview
 
 This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.  ElasticSearch provides enhanced searching capabilities on entity data.  This project is currently in the prototype stage and the APIs and functionality are expected to change significantly.
@@ -95,7 +99,7 @@ java -classpath g2elasticsearch.jar;g2.jar my.example.program.package.MyProgamAp
 
 ## Example Programs
 
-The following sample programs demonstrate how entity data can be loaded into the both the G2 engine and the ElasticSearch index.  
+The following sample programs demonstrate how entity data can be loaded into the both the G2 engine and the ElasticSearch index.
 
 1) G2IndexingWhileLoadingDataApp -- A program demonstrating how data may be loaded into both the G2 data repository and the ElasticSearch index concurrently.  Individual data records are loaded first into the G2 repository through the engine, and then into the ElasticSearch API through the `G2EntityDataIndexer`.  Once loaded and indexed, several queries are run to retrieve the data.
 
