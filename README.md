@@ -23,7 +23,7 @@ ElasticSearch itself is a separate software product, not made by Senzing.  You m
 ### Create SENZING_DIR for the G2 engine
 
 If you do not already have an `/opt/senzing` directory on your local system, visit
-   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
+   [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/create-senzing-dir.md).
 
 ### Add the G2 interface for ElasticSearch to your Senzing installation
 
