@@ -35,7 +35,9 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require X GB free disk space.
 - **Time:** Budget 30 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
+  - [docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md) 
   - [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html)
+  - [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md)
   - [kibana](https://www.elastic.co/guide/en/kibana/current/install.html)
 
 
@@ -44,7 +46,7 @@ describing where we can improve.   Now on with the show...
 ### Startup elasticsearch
 
 Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainer of this demonstration. 
-For guidence on how to get an instance of ES and kibana running vist [How to Bring Up an ELK Stack](https://senzing.atlassian.net/wiki/spaces/~5b326ce59049987392f679a4/pages/2656927745/How+to+bring+up+an+ELK+stack)
+For guidence on how to get an instance of ES and kibana running vist out doc on [How to Bring Up an ELK Stack](https://senzing.atlassian.net/wiki/spaces/~5b326ce59049987392f679a4/pages/2656927745/How+to+bring+up+an+ELK+stack)
 
 1. :pencil2: Set GitHub repository environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
 
@@ -92,13 +94,13 @@ For guidence on how to get an instance of ES and kibana running vist [How to Bri
       ${SENZING_DIR}/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
+1. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
 
 ```console
 java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
 ```
 
-### View Data
+### Search your data
 
 1. Open up kibana in a web browser, default: [localhost://5601](localhost:5601)
 
