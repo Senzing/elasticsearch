@@ -1,4 +1,4 @@
-package com.senzing.g2.search.elastic;
+package com.senzing.g2.elasticsearch;
 
 public class G2RecordInfo 
 {
