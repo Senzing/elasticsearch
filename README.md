@@ -1,9 +1,5 @@
 # Senzing with ElasticSearch (PROTOTYPE)
 
-## :no_entry: Deprecated
-
-[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
-
 ## Overview
 
 This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.  ElasticSearch provides enhanced searching capabilities on entity data.  This project is currently in the prototype stage and the APIs and functionality are expected to change significantly.
