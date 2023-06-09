@@ -48,9 +48,10 @@ describing where we can improve.   Now on with the show...
 Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainer of this demonstration. 
 For guidence on how to get an instance of ES and kibana running vist out doc on [How to Bring Up an ELK Stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md)
 
-1. :pencil2: Set GitHub repository environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
+1. :pencil2: Set local environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
 
     ```console
+    export SENZING_DIR=/opt/senzing
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=elasticsearch
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
@@ -76,7 +77,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 1. Build the interface for ElasticSearch.
 
     ```console
-    cd ${GIT_REPOSITORY_DIR}
+    cd ${GIT_REPOSITORY_DIR}/elasticsearch
 
     mvn \
       -Dmaven.repo.local=${GIT_REPOSITORY_DIR}/elasticsearch/maven_resources \
@@ -94,7 +95,9 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
       ${SENZING_DIR}/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
+1. 🤔 If not already done, make sure to source the senzing environment with the `setupEnv`
+
+3. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
 
 ```console
 java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
