@@ -76,7 +76,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 1. Build the interface for ElasticSearch.
 
     ```console
-    cd ${GIT_REPOSITORY_DIR}/elasticsearch
+    cd ${GIT_REPOSITORY_DIR}
 
     mvn \
       -Dmaven.repo.local=${GIT_REPOSITORY_DIR}/elasticsearch/maven_resources \
