@@ -46,7 +46,7 @@ describing where we can improve.   Now on with the show...
 ### Startup elasticsearch
 
 Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainer of this demonstration. 
-For guidence on how to get an instance of ES and kibana running vist out doc on [How to Bring Up an ELK Stack]([https://senzing.atlassian.net/wiki/spaces/~5b326ce59049987392f679a4/pages/2656927745/How+to+bring+up+an+ELK+stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md))
+For guidence on how to get an instance of ES and kibana running vist out doc on [How to Bring Up an ELK Stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md)
 
 1. :pencil2: Set GitHub repository environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
 
