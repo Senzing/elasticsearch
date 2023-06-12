@@ -91,7 +91,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 
     sudo cp \
       ${GIT_REPOSITORY_DIR}/elasticsearch/target/g2elasticsearch-1.0.0-SNAPSHOT.jar \
-      ${SENZING_DIR}/g2/elasticsearch/g2elasticsearch.jar
+      /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
 1. 🤔 If not already done, make sure to source the senzing environment with the `setupEnv`
