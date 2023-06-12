@@ -96,7 +96,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 
 1. 🤔 If not already done, make sure to source the senzing environment with the `setupEnv`
 
-3. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
+3. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't have your own data to load and experimenting or testing, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
 
 ```console
 java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
