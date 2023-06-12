@@ -51,7 +51,6 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 1. :pencil2: Set local environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
 
     ```console
-    export SENZING_DIR=/opt/senzing
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=elasticsearch
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
@@ -87,7 +86,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
 1. ✏️ Copy the interface library into a working directory
 
     ```console
-    sudo mkdir ${SENZING_DIR}/g2/elasticsearch
+    sudo mkdir /opt/senzing/g2/elasticsearch
     cd ${SENZING_DIR}/g2/elasticsearch
 
     sudo cp \
