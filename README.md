@@ -2,13 +2,11 @@
 
 ## Overview
 
-This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.  ElasticSearch provides enhanced searching capabilities on entity data.  This project is currently in the prototype stage and the APIs and functionality are expected to change significantly.
+This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.  ElasticSearch provides enhanced searching capabilities on entity data.
 
 The G2 data repository contains data records and observations about known entities.  It determines which records match/merge to become single resolved entities.  These resolved entities can be indexed through the ElasticSearch engine, to provide more searchable data entities.
 
 ElasticSearch stores its indexed entity data in a separate data repository than the G2 engine does.  Thus, ElasticSearch and G2 must both be managed in order to keep them in sync.
-
-This Java project shows how these two tools can be combined in common code.
 
 ### Preamble
 
@@ -46,7 +44,7 @@ describing where we can improve.   Now on with the show...
 ### Startup elasticsearch
 
 Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration. 
-For guidence on how to get an instance of ES and kibana running vist out doc on [How to Bring Up an ELK Stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md)
+For guidance on how to get an instance of ES and kibana running vist our doc on [How to Bring Up an ELK Stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md).
 
 1. :pencil2: Set local environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
 
@@ -63,7 +61,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
     cd {GIT_REPOSITORY_DIR}
     ```
     
-1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/b9588bcc22e92993fbd5415172c2abd8d0402356/lists/environment-variables.md#senzing_engine_configuration_json) is set to the senzing project that has or will have the data loaded to.
+1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/b9588bcc22e92993fbd5415172c2abd8d0402356/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the senzing project that has or will have the data loaded to.
 
 3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that your elasticsearch instance has. The index name can be whatever you want; conforming to elasticsearch's index syntax.
 
@@ -83,7 +81,7 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
       install
     ````
 
-1. ✏️ Copy the interface library into a working directory
+1. ✏️ Copy the library into a working directory
 
     ```console
     sudo mkdir /opt/senzing/g2/elasticsearch
@@ -94,9 +92,9 @@ For guidence on how to get an instance of ES and kibana running vist out doc on 
       /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 If not already done, make sure to source the senzing environment with the `setupEnv`
+1. 🤔 make sure to source the senzing environment with `setupEnv` in the **same console window** that will be running the created `jar`. Instructions on how to do so are in the quickstart below
 
-3. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't have your own data to load and experimenting or testing, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
+1. 🤔 Run the indexer, **make sure that you already have some data loaded into G2**, if you don't have your own data to load and/or are experimenting, you can use our truthset with instructions from the [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-)
 
 ```console
 java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
@@ -106,5 +104,11 @@ java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
 
 1. Open up kibana in a web browser, default: [localhost://5601](localhost:5601)
 
-1. Navigate to the discover tab, here you can view your created index and do searches. If you want to do fuzzy searches click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
+2. Navigate to the discover tab 
+
+<img width="200" alt="image" src="https://github.com/Senzing/elasticsearch/assets/49598357/b7663a5b-b940-4ca6-b3b6-dc0250a5f3ba">
+
+3. If all was done correctly, you should now see a new screen with a button to "Create data view". Click this and type in the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup
+
+4. Press "Create data view" at the bottom of the screen, now you can view your created index and do searches. If you want to do fuzzy searches click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
 <img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
