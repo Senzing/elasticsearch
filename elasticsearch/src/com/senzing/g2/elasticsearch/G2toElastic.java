@@ -34,11 +34,11 @@ public class G2toElastic
 	{
 		// define ElasticSearch index information
 		//String elasticSearchClustername = "elasticsearch_test";
-		String elasticSearchHostname = System.getenv("ELASTIC_HOSTNAME");		// The hostname and port must be set to point towards 
-		int elasticSearchPortNumber = Integer.parseInt(System.getenv("ELASTIC_PORT"));			// the exposed port for elasticsearch
+		String elasticSearchHostname = System.getenv("ELASTIC_HOSTNAME");		// The hostname for the elasticsearch instance
+		int elasticSearchPortNumber = Integer.parseInt(System.getenv("ELASTIC_PORT"));	// the exposed port for elasticsearch
 		String elasticSearchIndexName = System.getenv("ELASTIC_INDEX_NAME");		// This value can be whatever you want, adhering to elasticsearch's index syntax
 		
-		System.out.println("Program started.");
+		System.out.println("****Program started****");
 		System.out.println("Initalizing G2");
 
 		//****************************Creating G2Engine instance********************
@@ -46,13 +46,9 @@ public class G2toElastic
 		String moduleName = "G2ElasticSearch";
 		boolean verboseLogging = false;
 		String SENZING_ENGINE_CONFIGURATION_JSON = System.getenv("SENZING_ENGINE_CONFIGURATION_JSON");
-
-		// An example of another way to set the config JSON for the engine
-		if (SENZING_ENGINE_CONFIGURATION_JSON == null) {
-		    SENZING_ENGINE_CONFIGURATION_JSON = "{\"PIPELINE\": {\"CONFIGPATH\": \"/home/osboxes/senzing/etc\",\"SUPPORTPATH\": \"/home/osboxes/senzing/data/\",\"RESOURCEPATH\": \"/home/osboxes/senzing/resources\"},\"SQL\": {\"CONNECTION\": \"sqlite3://na:na@/home/osboxes/senzing/var/sqlite/G2C.db\"}}";
-		}
-		System.out.println(SENZING_ENGINE_CONFIGURATION_JSON);
 		int returnValue = 0;
+		
+		//System.out.println(SENZING_ENGINE_CONFIGURATION_JSON);
 
 		// Connect to the G2 Engine
 		System.out.println("Connecting to G2 engine.");
@@ -109,7 +105,6 @@ public class G2toElastic
 				if(entity.length()<=0)
 					break;
 				G2EntityData entityData = new G2EntityData(entity.toString());
-				//System.out.println(entityData.getRecordData()+"\n");
 				Reader input = new StringReader(entityData.getRecordData());
 				BinaryData data = BinaryData.of(IOUtils.toByteArray(input), ContentType.APPLICATION_JSON);
 				
