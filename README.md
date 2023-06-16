@@ -2,39 +2,22 @@
 
 ## Synopsis
 
-This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.
+This code project demonstrates how the Senzing engine may be used with an ElasticSearch indexing engine.
 
 ## Overview
 
 ElasticSearch provides enhanced searching capabilities on entity data.
 
-The G2 data repository contains data records and observations about known entities.  It determines which records match/merge to become single resolved entities.  These resolved entities can be indexed through the ElasticSearch engine, to provide more searchable data entities.
+The Senzing data repository contains data records and observations about known entities.
+It determines which records match/merge to become single resolved entities.
+These resolved entities can be indexed through the ElasticSearch engine, to provide more searchable data entities.
 
-ElasticSearch stores its indexed entity data in a separate data repository than the G2 engine does.  Thus, ElasticSearch and G2 must both be managed in order to keep them in sync.
-
-### Preamble
-
-At [Senzing](http://senzing.com),
-we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
-For the most part, instructions are copy and paste.
-Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
-Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
-If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
-describing where we can improve.   Now on with the show...
-
-### Legend
-
-1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
-   Perhaps there are some choices to be made.
-   Perhaps it's an optional step.
-1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
-1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+ElasticSearch stores its indexed entity data in a separate data repository than the G2 engine does.
+Thus, ElasticSearch and G2 must both be managed in order to keep them in sync.
 
 ### Expectations
 
-- **Space:** This repository and demonstration require X GB free disk space.
+- **Space:** This repository and demonstration require 4 GB free disk space.
 - **Time:** Budget 30 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
   - [docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
