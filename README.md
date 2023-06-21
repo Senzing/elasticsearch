@@ -41,7 +41,7 @@ describing where we can improve.   Now on with the show...
 ## Demonstration
 
 ### Load Data
-- 🤔 Data needs to be preemptively loaded into your Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, you can visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Make sure to keep this Senzing project in mind as you will need to point elasticsearch to it later.
+- 🤔 Data needs to be preemptively loaded into your Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, you can visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Whether using an existing Senzing installation or a new installation from the quickstart, the following instructions will be referring to this installation.
 
 ### Startup elasticsearch
 
@@ -65,9 +65,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     cd {GIT_REPOSITORY_DIR}
     ```
     
-1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/b9588bcc22e92993fbd5415172c2abd8d0402356/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing project that you loaded data to earlier.
+1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that you loaded data to earlier.
 
-3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that your elasticsearch instance has, if . The index name can be whatever you want; conforming to elasticsearch's index syntax.
+3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that your elasticsearch instance has. The index name can be whatever you want; conforming to elasticsearch's index syntax.
 
     ```console
     export ELASTIC_HOSTNAME=localhost
@@ -96,7 +96,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 make sure to source the senzing environment with `setupEnv` in the **same console window** that will be running the created `jar`. Instructions on how to do so are in the quickstart below
+1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer to the senzing installation that has the loaded data. If you used a Senzing project like the one setup in the quickstart you can source the `setupEnv` like in the quickstart to achieve this.
 
 1. 🤔 Navigate to the dir that the library was stored in and run the indexer.
 
