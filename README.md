@@ -100,20 +100,23 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
 1. 🤔 Navigate to the dir that the library was stored in and run the indexer.
 
-```console
-cd /opt/senzing/g2/elasticsearch
-java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
-```
+   ```console
+   cd /opt/senzing/g2/elasticsearch
+   java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
+   ```
 
 ### Search your data
 
-1. Open up kibana in a web browser, default: [localhost://5601](localhost:5601)
+1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
 
 2. Navigate to the discover tab 
 
 <img width="200" alt="image" src="https://github.com/Senzing/elasticsearch/assets/49598357/b7663a5b-b940-4ca6-b3b6-dc0250a5f3ba">
 
-3. If all was done correctly, you should now see a new screen with a button to "Create data view". Click this and type in the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup
+3. Create Index.
+   * If all was done correctly, you should now see a new screen with a button to "Create data view".
+   * Click this and in the `index pattern` box type the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup.
+   * The `Name` field can be set but is not required.
 
-4. Press "Create data view" at the bottom of the screen, now you can view your created index and do searches. If you want to do fuzzy searches click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
+5. Press "Save data view to Kibana" at the bottom of the screen, now you can view your created index and do searches. If you want to do fuzzy searches click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
 <img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
