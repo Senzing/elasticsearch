@@ -1,4 +1,4 @@
-package com.senzing.g2.search.elastic;
+package com.senzing.g2.elasticsearch;
 
 import java.io.StringReader;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
-public class G2EntitySearchData 
+public class G2EntityData 
 {
 	// This class represents a minimal data representation for a resolved entity in 
 	// the search system.  It contains only the entity ID, and the JSON records that
@@ -23,7 +23,7 @@ public class G2EntitySearchData
 	private String m_resolvedEntityJsonData;
 	private Long m_resolvedEntityID;
 	
-	public G2EntitySearchData(String resolvedEntityDataString)
+	public G2EntityData(String resolvedEntityDataString)
 	{
 		// This function parses a resolved entity document, and retrieves the necessary data.
 		StringReader sr = new StringReader(resolvedEntityDataString);
