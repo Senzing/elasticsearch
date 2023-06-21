@@ -38,6 +38,12 @@ describing where we can improve.   Now on with the show...
   - [kibana](https://www.elastic.co/guide/en/kibana/current/install.html)
   - [mvn](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
 
+## Prerequisites
+
+1. [maven](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
+1. [java](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/java.md)
+1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md).
+   
 ## Demonstration
 
 ### Load Data
