@@ -47,7 +47,7 @@ describing where we can improve.   Now on with the show...
 ## Demonstration
 
 ### Load Data
-- 🤔 Data needs to be preemptively loaded into your Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, you can visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Whether using an existing Senzing installation or a new installation from the quickstart, the following instructions will be referring to this installation.
+- 🤔 Data needs to be preemptively loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Whether using an existing Senzing installation or a new installation from the quickstart, the following instructions will be referring to this installation.
 
 ### Startup elasticsearch
 
@@ -71,9 +71,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     cd {GIT_REPOSITORY_DIR}
     ```
     
-1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that you loaded data to earlier.
+1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that the data was loaded into earlier
 
-3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that your elasticsearch instance has. The index name can be whatever you want; conforming to elasticsearch's index syntax.
+3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that the elasticsearch instance has. The index name can be anything; conforming to elasticsearch's index syntax.
 
     ```console
     export ELASTIC_HOSTNAME=localhost
@@ -102,7 +102,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer to the senzing installation that has the loaded data. If you used a Senzing project like the one setup in the quickstart you can source the `setupEnv` like in the quickstart to achieve this.
+1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer to the senzing installation that has the loaded data. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this.
 
 1. 🤔 Navigate to the dir that the library was stored in and run the indexer.
 
@@ -111,7 +111,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
    java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
    ```
 
-### Search your data
+### Search data
 
 1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
 
@@ -120,9 +120,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 <img width="200" alt="image" src="https://github.com/Senzing/elasticsearch/assets/49598357/b7663a5b-b940-4ca6-b3b6-dc0250a5f3ba">
 
 3. Create Index.
-   * If all was done correctly, you should now see a new screen with a button to "Create data view".
+   * If all was done correctly, a new screen with a button to "Create data view" should appear.
    * Click this and in the `index pattern` box type the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup.
    * The `Name` field can be set but is not required.
 
-5. Press "Save data view to Kibana" at the bottom of the screen, now you can view your created index and do searches. If you want to do fuzzy searches click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
+5. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
 <img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
