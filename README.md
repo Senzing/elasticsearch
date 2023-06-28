@@ -91,7 +91,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       install
     ````
 
-1. ✏️ Copy the library into a working directory
+1. ✏️ Copy the *library* into a working directory
 
     ```console
     sudo mkdir /opt/senzing/g2/elasticsearch
@@ -102,9 +102,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer to the senzing installation that has the loaded data. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this.
+1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this.
 
-1. 🤔 Navigate to the dir that the library was stored in and run the indexer.
+1. 🤔 Navigate to the dir that the *library* was stored in and run the indexer.
 
    ```console
    cd /opt/senzing/g2/elasticsearch
