@@ -98,7 +98,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       ${ELASTIC_PORT} \
       ${ELASTIC_INDEX_NAME} \
       ${SENZING_ENGINE_CONFIGURATION_JSON} \
-      senzing/elasticsearch \
+      senzing/elasticsearch
     ```
 ### Search data
 
