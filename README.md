@@ -84,7 +84,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
    ```console
    cd {GIT_REPOSITORY_DIR}
-   docker build -t senzing/elasticsearch .
+   sudo docker build -t senzing/elasticsearch .
    ```
 
 1. Run the indexer
