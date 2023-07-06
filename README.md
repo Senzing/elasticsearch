@@ -66,9 +66,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     ```
 1. Clone the repository
     ```console
-    cd {GIT_ACCOUNT_DIR}
+    cd ${GIT_ACCOUNT_DIR}
     git clone https://github.com/Senzing/elasticsearch.git
-    cd {GIT_REPOSITORY_DIR}
+    cd ${GIT_REPOSITORY_DIR}
     ```
     
 1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that the data was loaded into earlier
@@ -108,7 +108,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
    ```console
    cd /opt/senzing/g2/elasticsearch
-   java -classpath g2elasticsearch.jar com.senzing.g2.elasticsearch.G2toElastic
+   java -jar g2elasticsearch.jar
    ```
 
 ### Search data

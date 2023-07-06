@@ -48,7 +48,11 @@ public class G2toElastic
 		String SENZING_ENGINE_CONFIGURATION_JSON = System.getenv("SENZING_ENGINE_CONFIGURATION_JSON");
 		int returnValue = 0;
 		
-		//System.out.println(SENZING_ENGINE_CONFIGURATION_JSON);
+		if(SENZING_ENGINE_CONFIGURATION_JSON == null){
+		    System.out.println("The environment variable SENZING_ENGINE_CONFIGURATION_JSON must be set with a proper JSON configuration.");
+		    System.out.println("Please see https://senzing.zendesk.com/hc/en-us/articles/360038774134-G2Module-Configuration-and-the-Senzing-API");
+		    System.exit(-1);
+		}
 
 		// Connect to the G2 Engine
 		System.out.println("Connecting to G2 engine.");
