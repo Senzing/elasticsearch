@@ -102,8 +102,12 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
     ```
 
-1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this.
+1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this. Example:
 
+   ```console
+   export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
+   ```
+   
 1. 🤔 Navigate to the dir that the *library* was stored in and run the indexer.
 
    ```console
@@ -125,4 +129,3 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
    * The `Name` field can be set but is not required.
 
 5. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
-<img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
