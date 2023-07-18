@@ -91,17 +91,17 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
 #### Using a local sql project
 
-1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to be set to `/db`
+1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir.
 
     ```console
-    docker run \
+    sudo --preserve-env docker run \
       --interactive \
       --rm \
       --tty \
-      -e ${ELASTIC_HOSTNAME} \
-      -e ${ELASTIC_PORT} \
-      -e ${ELASTIC_INDEX_NAME} \
-      -e ${SENZING_ENGINE_CONFIGURATION_JSON} \
+      -e ELASTIC_HOSTNAME \
+      -e ELASTIC_PORT \
+      -e ELASTIC_INDEX_NAME \
+      -e SENZING_ENGINE_CONFIGURATION_JSON \
       --volume ~/senzing/var/sqlite:/db \
       senzing/elasticsearch
     ```
