@@ -46,7 +46,7 @@ describing where we can improve.   Now on with the show...
 ## Demonstration
 
 ### Load Data
-- 🤔 Data needs to be preemptively loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Whether using an existing Senzing installation or a new installation from the quickstart, the following instructions will be referring to this installation.
+- 🤔 Data needs to be loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-).
 
 ### Startup elasticsearch
 
@@ -87,17 +87,22 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
    sudo docker build -t senzing/elasticsearch .
    ```
 
-1. Run the indexer
+### Run the indexer
+
+#### Using a local sql project
+
+1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to be set to `/db`
 
     ```console
-    sudo docker run \
+    docker run \
       --interactive \
       --rm \
       --tty \
-      ${ELASTIC_HOSTNAME} \
-      ${ELASTIC_PORT} \
-      ${ELASTIC_INDEX_NAME} \
-      ${SENZING_ENGINE_CONFIGURATION_JSON} \
+      -e ${ELASTIC_HOSTNAME} \
+      -e ${ELASTIC_PORT} \
+      -e ${ELASTIC_INDEX_NAME} \
+      -e ${SENZING_ENGINE_CONFIGURATION_JSON} \
+      --volume ~/senzing/var/sqlite:/db \
       senzing/elasticsearch
     ```
 ### Search data
