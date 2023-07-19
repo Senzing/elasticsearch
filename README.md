@@ -75,7 +75,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that the elasticsearch instance has. The index name can be anything; conforming to elasticsearch's index syntax.
 
     ```console
-    export ELASTIC_HOSTNAME=localhost
+    export ELASTIC_HOSTNAME=senzing-elasticsearch
     export ELASTIC_PORT=9200
     export ELASTIC_INDEX_NAME=g2index
     ```
@@ -91,7 +91,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
 #### Using a local sql project
 
-1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir.
+1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir. We also need to run the container as part of the network that the ELK-stack is running in. Example:
 
     ```console
     sudo --preserve-env docker run \
@@ -102,6 +102,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       -e ELASTIC_PORT \
       -e ELASTIC_INDEX_NAME \
       -e SENZING_ENGINE_CONFIGURATION_JSON \
+      --network=senzing-network \
       --volume ~/senzing/var/sqlite:/db \
       senzing/elasticsearch
     ```
