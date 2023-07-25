@@ -106,6 +106,43 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       --volume ~/senzing/var/sqlite:/db \
       senzing/elasticsearch
     ```
+
+#### Using a database in a docker container
+1. Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to the exposed ports of the container with the database. Example;
+
+    ```console
+    export SENZING_ENGINE_CONFIGURATION_JSON='{
+    "PIPELINE": {
+        "CONFIGPATH": "/etc/opt/senzing",
+        "RESOURCEPATH": "/opt/senzing/g2/resources",
+        "SUPPORTPATH": "/opt/senzing/data"
+       },
+    "SQL": {
+        "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2"
+       }
+   }'
+    ```
+1. Next we will start up a docker stack to initialize and load data into a database.
+
+    ```console
+    cd {GIT_REPOSITORY_DIR}/elasticsearch
+    docker-compose up
+    ```
+1.  Now we can run the container as part of the network that the ELK-stack is running in so that it can "see" the elasticsearch container. Example:
+
+    ```console
+    sudo --preserve-env docker run \
+      --interactive \
+      --rm \
+      --tty \
+      -e ELASTIC_HOSTNAME \
+      -e ELASTIC_PORT \
+      -e ELASTIC_INDEX_NAME \
+      -e SENZING_ENGINE_CONFIGURATION_JSON \
+      --network=senzing-network \
+      senzing/elasticsearch
+    ```
+    
 ### Search data
 
 1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
