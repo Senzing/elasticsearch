@@ -108,7 +108,8 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     ```
 
 #### Using a database in a docker container
-1. Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to the exposed ports of the container with the database. Example;
+* ⚠️ **This section represents an example of how to connect to a database within a dockerfile but is not demonstratable with the current state of senzing-tools** ⚠️
+1.  Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to the exposed ports of the container with the database. Example;
 
     ```console
     export SENZING_ENGINE_CONFIGURATION_JSON='{
@@ -120,7 +121,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     "SQL": {
         "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2"
        }
-   }'
+      }'
     ```
 1. Next we will start up a docker stack to initialize and load data into a database.
 
