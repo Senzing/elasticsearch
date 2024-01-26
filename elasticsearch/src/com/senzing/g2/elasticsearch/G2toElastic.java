@@ -33,10 +33,16 @@ public class G2toElastic
 	public static void main(String[] args)
 	{
 		// define ElasticSearch index information
-		//String elasticSearchClustername = "elasticsearch_test";
-		String elasticSearchHostname = System.getenv("ELASTIC_HOSTNAME");		// The hostname for the elasticsearch instance
-		int elasticSearchPortNumber = Integer.parseInt(System.getenv("ELASTIC_PORT"));	// the exposed port for elasticsearch
-		String elasticSearchIndexName = System.getenv("ELASTIC_INDEX_NAME");		// This value can be whatever you want, adhering to elasticsearch's index syntax
+
+		String hostName = System.getenv("ELASTIC_HOSTNAME");
+		String elasticSearchHostname = (hostName!=null) ? hostName: "localhost";		// The hostname for the elasticsearch instance
+		
+		String portNum = System.getenv("ELASTIC_PORT");
+		int elasticSearchPortNumber = (portNum!=null) ? Integer.parseInt(portNum): 9200;// the exposed port for elasticsearch
+		
+		String indexName = System.getenv("ELASTIC_INDEX_NAME");
+		String elasticSearchIndexName = (indexName!=null) ? indexName: "g2index";		// This value can be whatever you want, adhering to elasticsearch's index syntax
+
 		
 		System.out.println("****Program started****");
 		System.out.println("Initalizing G2");
@@ -46,14 +52,13 @@ public class G2toElastic
 		String moduleName = "G2ElasticSearch";
 		boolean verboseLogging = false;
 		String SENZING_ENGINE_CONFIGURATION_JSON = System.getenv("SENZING_ENGINE_CONFIGURATION_JSON");
-		int returnValue = 0;
-		
 		if(SENZING_ENGINE_CONFIGURATION_JSON == null){
 		    System.out.println("The environment variable SENZING_ENGINE_CONFIGURATION_JSON must be set with a proper JSON configuration.");
 		    System.out.println("Please see https://senzing.zendesk.com/hc/en-us/articles/360038774134-G2Module-Configuration-and-the-Senzing-API");
 		    System.exit(-1);
 		}
-
+		
+		int returnValue = 0;
 		// Connect to the G2 Engine
 		System.out.println("Connecting to G2 engine.");
 		G2JNI g2Engine = new G2JNI();

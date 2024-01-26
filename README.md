@@ -33,21 +33,22 @@ describing where we can improve.   Now on with the show...
 - **Space:** This repository and demonstration require X GB free disk space.
 - **Time:** Budget 30 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
-  - [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html)
+
+  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+  - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html)
   - [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md)
   - [kibana](https://www.elastic.co/guide/en/kibana/current/install.html)
-  - [mvn](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
-
 ## Prerequisites
 
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
+1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md).
 1. [maven](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
 1. [java](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/java.md)
-1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md).
    
 ## Demonstration
 
 ### Load Data
-- 🤔 Data needs to be preemptively loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-). Whether using an existing Senzing installation or a new installation from the quickstart, the following instructions will be referring to this installation.
+- 🤔 Data needs to be loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-).
 
 ### Startup elasticsearch
 
@@ -76,45 +77,74 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that the elasticsearch instance has. The index name can be anything; conforming to elasticsearch's index syntax.
 
     ```console
-    export ELASTIC_HOSTNAME=localhost
+    export ELASTIC_HOSTNAME=senzing-elasticsearch
     export ELASTIC_PORT=9200
     export ELASTIC_INDEX_NAME=g2index
     ```
-    
-1. Build the interface for ElasticSearch.
+
+1. Build the docker container.
+
+   ```console
+   cd {GIT_REPOSITORY_DIR}
+   sudo docker build -t senzing/elasticsearch .
+   ```
+
+### Run the indexer
+
+#### Using a local sql project
+
+1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir. We also need to run the container as part of the network that the ELK-stack is running in. Example:
 
     ```console
-    cd ${GIT_REPOSITORY_DIR}/elasticsearch
-
-    mvn \
-      -Dmaven.repo.local=${GIT_REPOSITORY_DIR}/elasticsearch/maven_resources \
-      install
-    ````
-
-1. ✏️ Copy the *library* into a working directory
-
-    ```console
-    sudo mkdir /opt/senzing/g2/elasticsearch
-    cd /opt/senzing/g2/elasticsearch
-
-    sudo cp \
-      ${GIT_REPOSITORY_DIR}/elasticsearch/target/g2elasticsearch-1.0.0-SNAPSHOT.jar \
-      /opt/senzing/g2/elasticsearch/g2elasticsearch.jar
+    sudo --preserve-env docker run \
+      --interactive \
+      --rm \
+      --tty \
+      -e ELASTIC_HOSTNAME \
+      -e ELASTIC_PORT \
+      -e ELASTIC_INDEX_NAME \
+      -e SENZING_ENGINE_CONFIGURATION_JSON \
+      --network=senzing-network \
+      --volume ~/senzing/var/sqlite:/db \
+      senzing/elasticsearch
     ```
 
-1. 🤔 Make sure to set the `LD_LIBRARY_PATH` variable in the **same console window** that will be running the indexer. If a Senzing project like the one setup in the quickstart the `setupenv` can be used similarly to the quickstart to achieve this. Example:
+#### Using a database in a docker container
+* ⚠️ **This section represents an example of how to connect to a database within a dockerfile but is not demonstratable with the current state of senzing-tools** ⚠️
+1.  Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to the exposed ports of the container with the database. Example;
 
-   ```console
-   export LD_LIBRARY_PATH=/opt/senzing/g2/lib/
-   ```
-   
-1. 🤔 Navigate to the dir that the *library* was stored in and run the indexer.
+    ```console
+    export SENZING_ENGINE_CONFIGURATION_JSON='{
+    "PIPELINE": {
+        "CONFIGPATH": "/etc/opt/senzing",
+        "RESOURCEPATH": "/opt/senzing/g2/resources",
+        "SUPPORTPATH": "/opt/senzing/data"
+       },
+    "SQL": {
+        "CONNECTION": "postgresql://postgres:postgres@senzing-postgres:5432:G2"
+       }
+      }'
+    ```
+1. Next we will start up a docker stack to initialize and load data into a database.
 
-   ```console
-   cd /opt/senzing/g2/elasticsearch
-   java -jar g2elasticsearch.jar
-   ```
+    ```console
+    cd {GIT_REPOSITORY_DIR}/elasticsearch
+    docker-compose up
+    ```
+1.  Now we can run the container as part of the network that the ELK-stack is running in so that it can "see" the elasticsearch container. Example:
 
+    ```console
+    sudo --preserve-env docker run \
+      --interactive \
+      --rm \
+      --tty \
+      -e ELASTIC_HOSTNAME \
+      -e ELASTIC_PORT \
+      -e ELASTIC_INDEX_NAME \
+      -e SENZING_ENGINE_CONFIGURATION_JSON \
+      --network=senzing-network \
+      senzing/elasticsearch
+    ```
 ### Search data
 
 1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
@@ -129,3 +159,4 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
    * The `Name` field can be set but is not required.
 
 5. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
+<img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
