@@ -42,7 +42,9 @@ describing where we can improve.   Now on with the show...
 
 1. [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
 1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md).
-
+1. [maven](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
+1. [java](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/java.md)
+   
 ## Demonstration
 
 ### Load Data
@@ -65,9 +67,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
     ```
 1. Clone the repository
     ```console
-    cd {GIT_ACCOUNT_DIR}
+    cd ${GIT_ACCOUNT_DIR}
     git clone https://github.com/Senzing/elasticsearch.git
-    cd {GIT_REPOSITORY_DIR}
+    cd ${GIT_REPOSITORY_DIR}
     ```
     
 1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that the data was loaded into earlier
@@ -143,7 +145,6 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       --network=senzing-network \
       senzing/elasticsearch
     ```
-    
 ### Search data
 
 1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
