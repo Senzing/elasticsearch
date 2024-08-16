@@ -91,7 +91,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
 ### Run the indexer
 
-#### Using a local sql project
+#### Using a local sqlite Senzing database
 
 1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir. We also need to run the container as part of the network that the ELK-stack is running in. Example:
 
@@ -109,7 +109,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       senzing/elasticsearch
     ```
 
-#### Using an external database
+#### Using an external Senzing database
 
 1.  Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to where the external database is. Example:
 
