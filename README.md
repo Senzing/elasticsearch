@@ -109,9 +109,9 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       senzing/elasticsearch
     ```
 
-#### Using a database in a docker container
-* ⚠️ **This section represents an example of how to connect to a database within a dockerfile but is not demonstratable with the current state of senzing-tools** ⚠️
-1.  Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to the exposed ports of the container with the database. Example;
+#### Using an external database
+
+1.  Here we won't need to mount a database, instead we can set our `CONNECTION` string in the config json to where the external database is. Example:
 
     ```console
     export SENZING_ENGINE_CONFIGURATION_JSON='{
@@ -125,12 +125,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
        }
       }'
     ```
-1. Next we will start up a docker stack to initialize and load data into a database.
-
-    ```console
-    cd {GIT_REPOSITORY_DIR}/elasticsearch
-    docker-compose up
-    ```
+    
 1.  Now we can run the container as part of the network that the ELK-stack is running in so that it can "see" the elasticsearch container. Example:
 
     ```console
