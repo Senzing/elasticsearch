@@ -2,23 +2,20 @@
 
 ## Overview
 
-This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine.  ElasticSearch provides enhanced searching capabilities on entity data.
+This code project demonstrates how the G2 engine may be used with an ElasticSearch indexing engine. ElasticSearch provides enhanced searching capabilities on entity data.
 
-The G2 data repository contains data records and observations about known entities.  It determines which records match/merge to become single resolved entities.  These resolved entities can be indexed through the ElasticSearch engine, to provide more searchable data entities.
+The G2 data repository contains data records and observations about known entities. It determines which records match/merge to become single resolved entities. These resolved entities can be indexed through the ElasticSearch engine, to provide more searchable data entities.
 
-ElasticSearch stores its indexed entity data in a separate data repository than the G2 engine does.  Thus, ElasticSearch and G2 must both be managed in order to keep them in sync.
+ElasticSearch stores its indexed entity data in a separate data repository than the G2 engine does. Thus, ElasticSearch and G2 must both be managed in order to keep them in sync.
 
 ### Preamble
 
-At [Senzing](http://senzing.com),
-we strive to create GitHub documentation in a
-"[don't make me think](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md)" style.
-For the most part, instructions are copy and paste.
+At [Senzing], we strive to create GitHub documentation in a
+"[don't make me think]" style. For the most part, instructions are copy and paste.
 Whenever thinking is needed, it's marked with a "thinking" icon :thinking:.
 Whenever customization is needed, it's marked with a "pencil" icon :pencil2:.
 If the instructions are not clear, please let us know by opening a new
-[Documentation issue](https://github.com/Senzing/template-python/issues/new?template=documentation_request.md)
-describing where we can improve.   Now on with the show...
+[Documentation issue] describing where we can improve. Now on with the show...
 
 ### Legend
 
@@ -34,53 +31,55 @@ describing where we can improve.   Now on with the show...
 - **Time:** Budget 30 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
 - **Background knowledge:** This repository assumes a working knowledge of:
 
-  - [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
-  - [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html)
-  - [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md)
-  - [kibana](https://www.elastic.co/guide/en/kibana/current/install.html)
+  - [Docker]
+  - [Elasticsearch]
+  - [git]
+  - [kibana]
+
 ## Prerequisites
 
-1. [Docker](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md)
-1. [git](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md).
-1. [maven](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md)
-1. [java](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/java.md)
-   
+1. [Docker]
+1. [git]
+1. [maven]
+1. [java]
+
 ## Demonstration
 
 ### Load Data
-- 🤔 Data needs to be loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart](https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-).
+
+- 🤔 Data needs to be loaded into a Senzing project to post to elasticsearch, if you don't have any data to load, or don't know how, visit our [quickstart].
 
 ### Startup elasticsearch
 
-- Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration. 
-For guidance on how to get an instance of ES and kibana running vist our doc on [How to Bring Up an ELK Stack](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md).
+- Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration.
+  For guidance on how to get an instance of ES and kibana running visit our doc on [How to Bring Up an ELK Stack].
 
 ### Build project
 
-1. :pencil2: Set local environment variables.  These variables may be modified, but do not need to be modified.  The variables are used throughout the installation procedure.
+1. :pencil2: Set local environment variables. These variables may be modified, but do not need to be modified. The variables are used throughout the installation procedure.
 
-    ```console
-    export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=elasticsearch
-    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    ```
+   ```console
+   export GIT_ACCOUNT=senzing
+   export GIT_REPOSITORY=elasticsearch
+   export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+   export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+   ```
+
 1. Clone the repository
-    ```console
-    cd ${GIT_ACCOUNT_DIR}
-    git clone https://github.com/Senzing/elasticsearch.git
-    cd ${GIT_REPOSITORY_DIR}
-    ```
-    
-1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json) environment variable is set to the Senzing installation that the data was loaded into earlier
+   ```console
+   cd ${GIT_ACCOUNT_DIR}
+   git clone https://github.com/Senzing/elasticsearch.git
+   cd ${GIT_REPOSITORY_DIR}
+   ```
+1. :thinking: Make sure the [SENZING_ENGINE_CONFIGURATION_JSON] environment variable is set to the Senzing installation that the data was loaded into earlier
 
-3. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that the elasticsearch instance has. The index name can be anything; conforming to elasticsearch's index syntax.
+1. :thinking: Set elasticsearch local environment variables. The hostname and port must point towards the exposed port that the elasticsearch instance has. The index name can be anything; conforming to elasticsearch's index syntax.
 
-    ```console
-    export ELASTIC_HOSTNAME=senzing-elasticsearch
-    export ELASTIC_PORT=9200
-    export ELASTIC_INDEX_NAME=g2index
-    ```
+   ```console
+   export ELASTIC_HOSTNAME=senzing-elasticsearch
+   export ELASTIC_PORT=9200
+   export ELASTIC_INDEX_NAME=g2index
+   ```
 
 1. Build the docker container.
 
@@ -95,19 +94,19 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
 
 1. We will mount the sqlite database; make sure the `CONNECTION` string in our config json points to where it is mounted. In this example the `CONNECTION` will need to point towards the `/db` dir. We also need to run the container as part of the network that the ELK-stack is running in. Example:
 
-    ```console
-    sudo --preserve-env docker run \
-      --interactive \
-      --rm \
-      --tty \
-      -e ELASTIC_HOSTNAME \
-      -e ELASTIC_PORT \
-      -e ELASTIC_INDEX_NAME \
-      -e SENZING_ENGINE_CONFIGURATION_JSON \
-      --network=senzing-network \
-      --volume ~/senzing/var/sqlite:/db \
-      senzing/elasticsearch
-    ```
+   ```console
+   sudo --preserve-env docker run \
+     --interactive \
+     --rm \
+     --tty \
+     -e ELASTIC_HOSTNAME \
+     -e ELASTIC_PORT \
+     -e ELASTIC_INDEX_NAME \
+     -e SENZING_ENGINE_CONFIGURATION_JSON \
+     --network=senzing-network \
+     --volume ~/senzing/var/sqlite:/db \
+     senzing/elasticsearch
+   ```
 
 #### Using an external Senzing database
 
@@ -125,7 +124,7 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
        }
       }'
     ```
-    
+
 1.  Now we can run the container as part of the network that the ELK-stack is running in so that it can "see" the elasticsearch container. Example:
 
     ```console
@@ -140,18 +139,35 @@ For guidance on how to get an instance of ES and kibana running vist our doc on 
       --network=senzing-network \
       senzing/elasticsearch
     ```
+
 ### Search data
 
-1. Open up kibana in a web browser, default: [localhost:5601](http://localhost:5601)
+1. Open up kibana in a web browser, default: [localhost:5601]
 
-2. Navigate to the discover tab 
+2. Navigate to the discover tab
 
 <img width="200" alt="image" src="https://github.com/Senzing/elasticsearch/assets/49598357/b7663a5b-b940-4ca6-b3b6-dc0250a5f3ba">
 
 3. Create Index.
-   * If all was done correctly, a new screen with a button to "Create data view" should appear.
-   * Click this and in the `index pattern` box type the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup.
-   * The `Name` field can be set but is not required.
 
-5. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on "Saved Query" and switch the language to lucene. [Here](https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness) you can view the lucene syntax and how to do fuzzy searches
-<img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
+   - If all was done correctly, a new screen with a button to "Create data view" should appear.
+   - Click this and in the `index pattern` box type the name of the index that was created, this was the `ELASTIC_INDEX_NAME` variable set early, and should also appear on the right side of the popup.
+   - The `Name` field can be set but is not required.
+
+4. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on "Saved Query" and switch the language to lucene. [Here] you can view the lucene syntax and how to do fuzzy searches
+   <img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
+
+[Docker]: https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md
+[Documentation issue]: https://github.com/Senzing/template-python/issues/new?template=documentation_request.md
+[don't make me think]: https://github.com/Senzing/knowledge-base/blob/main/WHATIS/dont-make-me-think.md
+[Elasticsearch]: https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
+[git]: https://github.com/Senzing/knowledge-base/blob/main/WHATIS/git.md
+[Here]: https://www.elastic.co/guide/en/elasticsearch/reference/8.8/query-dsl-query-string-query.html#query-string-fuzziness
+[How to Bring Up an ELK Stack]: https://github.com/Senzing/knowledge-base/blob/main/HOWTO/bring-up-ELK-stack.md
+[java]: https://github.com/Senzing/knowledge-base/blob/main/WHATIS/java.md
+[kibana]: https://www.elastic.co/guide/en/kibana/current/install.html
+[localhost:5601]: http://localhost:5601
+[maven]: https://github.com/Senzing/knowledge-base/blob/main/WHATIS/maven.md
+[quickstart]: https://senzing.zendesk.com/hc/en-us/articles/115002408867-Quickstart-Guide-
+[SENZING_ENGINE_CONFIGURATION_JSON]: https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_engine_configuration_json
+[Senzing]: https://senzing.com
