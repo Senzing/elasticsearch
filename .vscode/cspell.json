@@ -7,11 +7,13 @@
   "words": [
     "autoremove",
     "bitnami",
+    "buildx",
     "CCLA",
     "CODEOWNER",
     "CONFIGPATH",
     "databind",
     "dataformat",
+    "DOCKERHUB",
     "fasterxml",
     "glassfish",
     "healthcheck",
