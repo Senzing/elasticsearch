@@ -3,6 +3,10 @@
   <groupId>com.senzing</groupId>
   <artifactId>g2elasticsearch</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
