@@ -3,6 +3,10 @@
   <groupId>com.senzing</groupId>
   <artifactId>g2elasticsearch</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -66,7 +70,7 @@
 	    <dependency>
 	      <groupId>co.elastic.clients</groupId>
 	      <artifactId>elasticsearch-java</artifactId>
-	      <version>8.8.0</version>
+	      <version>9.0.3</version>
 	    </dependency>
 	    <dependency>
 	      <groupId>com.fasterxml.jackson.core</groupId>
