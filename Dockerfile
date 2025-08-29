@@ -16,7 +16,7 @@ WORKDIR /build
 
 RUN apt-get update \
   && apt-get -y install postgresql-client \
-  && apt-get -y install openjdk-11-jre-headless maven \
+  && apt-get -y install openjdk-17-jre-headless maven \
   && apt-get -y clean \
   && ls \
   && mvn clean install \
