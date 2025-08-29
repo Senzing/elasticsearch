@@ -28,7 +28,7 @@ RUN apt-get update \
   && apt-get -y autoremove \
   && apt-get -y clean
 
-mvn clean install
+RUN mvn clean install
 HEALTHCHECK CMD test -f /app/g2elasticsearch-1.0.0-SNAPSHOT.jar
 
 USER 1001
