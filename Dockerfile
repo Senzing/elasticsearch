@@ -17,10 +17,7 @@ WORKDIR /build
 RUN apt-get update \
   && apt-get -y install postgresql-client \
   && apt-get -y install openjdk-11-jre-headless maven \
-  && apt-get -y clean \
   && mvn clean install \
-  && mkdir /app \
-  && cp target/g2elasticsearch-1.0.0-SNAPSHOT.jar /app/ \
 
 HEALTHCHECK CMD test -f /app/g2elasticsearch-1.0.0-SNAPSHOT.jar
 
