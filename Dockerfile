@@ -18,15 +18,9 @@ RUN apt-get update \
   && apt-get -y install postgresql-client \
   && apt-get -y install openjdk-11-jre-headless maven \
   && apt-get -y clean \
-  && ls \
   && mvn clean install \
   && mkdir /app \
   && cp target/g2elasticsearch-1.0.0-SNAPSHOT.jar /app/ \
-  && cd / \
-  && rm -rf /build \
-  && apt-get -y remove maven \
-  && apt-get -y autoremove \
-  && apt-get -y clean
 
 HEALTHCHECK CMD test -f /app/g2elasticsearch-1.0.0-SNAPSHOT.jar
 
