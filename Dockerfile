@@ -15,14 +15,12 @@ COPY elasticsearch /build
 WORKDIR /build
 
 RUN apt-get update \
-  && apt-get -y install postgresql-client \
-  && apt-get -y install openjdk-17-jre-headless maven \
+  && apt-get -y install --no-install-recommends postgresql-client \
+      openjdk-17-jre-headless maven \
   && apt-get -y clean \
-  && ls \
   && mvn clean install \
   && mkdir /app \
   && cp target/g2elasticsearch-1.0.0-SNAPSHOT.jar /app/ \
-  && cd / \
   && rm -rf /build \
   && apt-get -y remove maven \
   && apt-get -y autoremove \
