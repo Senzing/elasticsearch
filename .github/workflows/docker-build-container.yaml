@@ -5,11 +5,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   docker-build-container:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
