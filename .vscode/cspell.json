@@ -1,37 +1,35 @@
 {
-  // Version of the setting file.  Always 0.2
   "version": "0.2",
-  // language - current active spelling language
   "language": "en",
-  // words - list of words to be always considered correct
   "words": [
-    "autoremove",
-    "bitnami",
-    "buildx",
     "CCLA",
     "CODEOWNER",
     "CONFIGPATH",
+    "DOCKERHUB",
+    "ICLA",
+    "LICENSESTRINGBASE",
+    "RESOURCEPATH",
+    "SUPPORTPATH",
+    "Senzing",
+    "Stringifier",
+    "WATCHLIST",
+    "autoremove",
+    "bitnami",
+    "buildx",
     "databind",
     "dataformat",
-    "DOCKERHUB",
+    "esbenp",
     "fasterxml",
     "glassfish",
     "healthcheck",
-    "ICLA",
     "ingester",
     "initdatabase",
     "isready",
     "javax",
-    "LICENSESTRINGBASE",
     "lucene",
-    "RESOURCEPATH",
-    "Senzing",
     "senzingapi",
     "sslmode",
-    "stackoverflow",
-    "Stringifier",
-    "SUPPORTPATH",
-    "WATCHLIST"
+    "stackoverflow"
   ],
   "ignorePaths": [
     ".git/**"
