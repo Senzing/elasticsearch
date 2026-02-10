@@ -3,6 +3,7 @@
   "language": "en",
   "words": [
     "autoremove",
+    "barrycaceres",
     "bitnami",
     "buildx",
     "CCLA",
@@ -22,6 +23,7 @@
     "initdatabase",
     "isready",
     "javax",
+    "kernelsam",
     "LICENSESTRINGBASE",
     "lucene",
     "RESOURCEPATH",
@@ -33,5 +35,7 @@
     "SUPPORTPATH",
     "WATCHLIST"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }
