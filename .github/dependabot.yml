@@ -16,7 +16,7 @@ updates:
       interval: "daily"
   - package-ecosystem: "maven"
     assignees:
-      - "barrycaceres"
+      - "SamMacy"
     cooldown:
       default-days: 21
     directory: "/elasticsearch/"
