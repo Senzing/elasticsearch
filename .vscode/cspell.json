@@ -3,7 +3,6 @@
   "language": "en",
   "words": [
     "autoremove",
-    "barrycaceres",
     "bitnami",
     "buildx",
     "CCLA",
@@ -14,7 +13,6 @@
     "dataformat",
     "dockerfiles",
     "DOCKERHUB",
-    "esbenp",
     "fasterxml",
     "glassfish",
     "healthcheck",
@@ -35,5 +33,7 @@
     "SUPPORTPATH",
     "WATCHLIST"
   ],
-  "ignorePaths": [".git/**"]
+  "ignorePaths": [
+    ".git/**"
+  ]
 }
