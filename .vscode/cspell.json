@@ -25,6 +25,7 @@
     "LICENSESTRINGBASE",
     "lucene",
     "RESOURCEPATH",
+    "reusables",
     "Senzing",
     "senzingapi",
     "sslmode",
