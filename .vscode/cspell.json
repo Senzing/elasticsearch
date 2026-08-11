@@ -24,13 +24,18 @@
     "kernelsam",
     "LICENSESTRINGBASE",
     "lucene",
+    "misconfig",
+    "pom",
     "RESOURCEPATH",
+    "reusables",
     "Senzing",
     "senzingapi",
     "sslmode",
     "stackoverflow",
     "Stringifier",
     "SUPPORTPATH",
+    "trivy",
+    "vuln",
     "WATCHLIST"
   ],
   "ignorePaths": [
