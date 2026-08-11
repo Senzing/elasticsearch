@@ -1,0 +1,15 @@
+---
+# Mirrors the super-linter default configuration, with one change: remote
+# dependency resolution is disabled. Trivy's Maven analyzer downloads parent
+# pom files from Maven Central, which rate-limits GitHub Actions runners
+# (HTTP 429, Retry-After: 1800) and fails this job. Offline mode keeps all
+# three scanners enabled without the network lookups.
+exit-code: 1
+exit-on-eol: 2
+scan:
+  disable-telemetry: true
+  offline: true
+  scanners:
+    - vuln
+    - misconfig
+    - secret

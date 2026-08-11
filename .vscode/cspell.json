@@ -24,6 +24,8 @@
     "kernelsam",
     "LICENSESTRINGBASE",
     "lucene",
+    "misconfig",
+    "pom",
     "RESOURCEPATH",
     "reusables",
     "Senzing",
@@ -32,6 +34,8 @@
     "stackoverflow",
     "Stringifier",
     "SUPPORTPATH",
+    "trivy",
+    "vuln",
     "WATCHLIST"
   ],
   "ignorePaths": [
