@@ -55,7 +55,7 @@ public class G2toElastic {
           "The environment variable SENZING_ENGINE_CONFIGURATION_JSON must be set with a proper JSON configuration.");
       System.out.println(
           "Please see https://www.senzing.com/docs/tutorials/senzing_engine_config/");
-      System.exit(-1);
+      System.exit(1);
     }
 
     boolean success = false;

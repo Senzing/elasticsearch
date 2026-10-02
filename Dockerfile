@@ -52,11 +52,11 @@ RUN apt-get update \
   && apt-get -y clean \
   && rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /build/target/g2elasticsearch-1.0.0-SNAPSHOT.jar /app/
+COPY --from=builder /build/target/g2elasticsearch-2.0.0.jar /app/
 
-HEALTHCHECK CMD test -f /app/g2elasticsearch-1.0.0-SNAPSHOT.jar
+HEALTHCHECK CMD test -f /app/g2elasticsearch-2.0.0.jar
 
 USER 1001
 
 WORKDIR /app
-CMD ["java", "--enable-native-access=ALL-UNNAMED", "-jar", "g2elasticsearch-1.0.0-SNAPSHOT.jar"]
+CMD ["java", "--enable-native-access=ALL-UNNAMED", "-jar", "g2elasticsearch-2.0.0.jar"]
