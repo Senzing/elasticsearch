@@ -1,32 +1,29 @@
 package com.senzing.g2.elasticsearch;
 
-import co.elastic.clients.elasticsearch._types.ErrorResponse;
-import co.elastic.clients.json.JsonData;
-import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
+import static com.senzing.sdk.SzFlag.SZ_ENTITY_INCLUDE_RECORD_JSON_DATA;
+import static com.senzing.sdk.SzFlag.SZ_EXPORT_INCLUDE_ALL_ENTITIES;
+
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
-import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
-import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest.Builder;
-import co.elastic.clients.elasticsearch.core.IndexRequest;
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
 import co.elastic.clients.elasticsearch._helpers.bulk.BulkIngester;
-import co.elastic.clients.util.*;
+import co.elastic.clients.elasticsearch._helpers.bulk.BulkListener;
+import co.elastic.clients.elasticsearch.core.BulkRequest;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
+import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
+import co.elastic.clients.util.BinaryData;
+import co.elastic.clients.util.ContentType;
 
-import com.senzing.g2.engine.G2JNI;
-import com.senzing.g2.engine.Result;
+import com.senzing.sdk.SzEngine;
+import com.senzing.sdk.SzEnvironment;
+import com.senzing.sdk.SzException;
+import com.senzing.sdk.SzFlag;
+import com.senzing.sdk.core.SzCoreEnvironment;
 
-import java.io.StringReader;
-import java.io.InputStream;
-import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import org.elasticsearch.client.RestClient;
-import org.apache.http.HttpHost;
-import org.apache.commons.io.IOUtils;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class G2toElastic {
   public static void main(String[] args) {
@@ -46,115 +43,125 @@ public class G2toElastic {
                                                                                  // syntax
 
     System.out.println("****Program started****");
-    System.out.println("Initializing G2");
+    System.out.println("Initializing Senzing");
 
-    // ****************************Creating G2Engine instance********************
-    // define G2 connecting information
-    String moduleName = "G2ElasticSearch";
+    // ****************************Creating Senzing environment********************
+    // define Senzing connecting information
+    String instanceName = "G2ElasticSearch";
     boolean verboseLogging = false;
     String SENZING_ENGINE_CONFIGURATION_JSON = System.getenv("SENZING_ENGINE_CONFIGURATION_JSON");
     if (SENZING_ENGINE_CONFIGURATION_JSON == null) {
       System.out.println(
           "The environment variable SENZING_ENGINE_CONFIGURATION_JSON must be set with a proper JSON configuration.");
       System.out.println(
-          "Please see https://senzing.zendesk.com/hc/en-us/articles/360038774134-G2Module-Configuration-and-the-Senzing-API");
-      System.exit(-1);
+          "Please see https://www.senzing.com/docs/tutorials/senzing_engine_config/");
+      System.exit(1);
     }
 
-    int returnValue = 0;
-    // Connect to the G2 Engine
-    System.out.println("Connecting to G2 engine.");
-    G2JNI g2Engine = new G2JNI();
-    returnValue = g2Engine.init(moduleName, SENZING_ENGINE_CONFIGURATION_JSON, verboseLogging);
-    if (returnValue != 0) {
-      System.out.println("Could not connect to G2");
-      System.out.println("Return Code = " + returnValue);
-      System.out.println("Exception Code = " + g2Engine.getLastExceptionCode());
-      System.out.println("Exception = " + g2Engine.getLastException());
-      return;
-    }
-
+    boolean success = false;
+    SzEnvironment szEnvironment = null;
     try {
-      // ****************************Creating elasticsearch
-      // objects********************
+      // Connect to the Senzing engine
+      System.out.println("Connecting to Senzing engine.");
+      szEnvironment = SzCoreEnvironment.newBuilder()
+          .instanceName(instanceName)
+          .settings(SENZING_ENGINE_CONFIGURATION_JSON)
+          .verboseLogging(verboseLogging)
+          .build();
+      SzEngine szEngine = szEnvironment.getEngine();
+
+      // ****************************Creating elasticsearch objects********************
       System.out.println("Making elasticsearch clients");
-      // Create the low-level client
-      RestClient restClient = RestClient.builder(
-          new HttpHost(elasticSearchHostname, elasticSearchPortNumber)).build();
+      String elasticSearchUrl = "http://" + elasticSearchHostname + ":" + elasticSearchPortNumber;
+      AtomicLong indexedCount = new AtomicLong();
+      AtomicLong failedCount = new AtomicLong();
 
-      // Create the transport with a Jackson mapper
-      ElasticsearchTransport transport = new RestClientTransport(
-          restClient, new JacksonJsonpMapper());
+      try (ElasticsearchClient esClient = ElasticsearchClient.of(b -> b.host(elasticSearchUrl));
+          BulkIngester<Void> ingester = BulkIngester.of(b -> b
+              .client(esClient)
+              .maxOperations(25) // This setting changes how many documents get sent at a times
+              .flushInterval(250, TimeUnit.MILLISECONDS) // This setting changes how often the ingester gets flushed
+              .listener(new BulkResultListener(indexedCount, failedCount)))) {
 
-      // And create the API client
-      ElasticsearchClient esClient = new ElasticsearchClient(transport);
+        Set<SzFlag> exportFlags = EnumSet.of(SZ_ENTITY_INCLUDE_RECORD_JSON_DATA);
+        exportFlags.addAll(SZ_EXPORT_INCLUDE_ALL_ENTITIES);
+        long exportHandle = szEngine.exportJsonEntityReport(exportFlags);
 
-      ElasticsearchIndicesClient eiClient = new ElasticsearchIndicesClient(transport);
+        System.out.println("Indexing entities");
+        try {
+          String entity;
+          while ((entity = szEngine.fetchNext(exportHandle)) != null) {
+            G2EntityData entityData = new G2EntityData(entity);
+            BinaryData data = BinaryData.of(entityData.getRecordData().getBytes(StandardCharsets.UTF_8),
+                ContentType.APPLICATION_JSON);
 
-      BulkIngester<Void> ingester = BulkIngester.of(b -> b
-          .client(esClient)
-          .maxOperations(25) // This setting changes how many documents get sent at a times
-          .flushInterval(250, TimeUnit.MILLISECONDS) // This setting changes how often the ingester gets flushed
-      );
-
-      long g2EntityFlag = g2Engine.G2_ENTITY_INCLUDE_RECORD_JSON_DATA;
-      long g2ExportFlag = g2Engine.G2_EXPORT_INCLUDE_ALL_ENTITIES;
-      Result<Long> exportHandle = new Result<Long>();
-
-      returnValue = g2Engine.exportJSONEntityReport(g2EntityFlag | g2ExportFlag, exportHandle);
-      if (returnValue != 0) {
-        System.out.println("Could not export JSON report");
-        System.out.println("Return Code = " + returnValue);
-        System.out.println("Exception Code = " + g2Engine.getLastExceptionCode());
-        System.out.println("Exception = " + g2Engine.getLastException());
-        return;
+            // This ingester does bulk indexes
+            ingester.add(op -> op
+                .index(idx -> idx
+                    .index(elasticSearchIndexName)
+                    .document(data)));
+          }
+        } finally {
+          szEngine.closeExportReport(exportHandle);
+        }
       }
-      StringBuffer entity = new StringBuffer();
+      System.out.println("Finished indexing: " + indexedCount.get() + " entities indexed, "
+          + failedCount.get() + " failed");
+      success = (failedCount.get() == 0);
 
-      System.out.println("Indexing entities");
-      while (true) {
-        g2Engine.fetchNext(exportHandle.getValue(), entity);
-        if (entity.length() <= 0)
-          break;
-        G2EntityData entityData = new G2EntityData(entity.toString());
-        Reader input = new StringReader(entityData.getRecordData());
-        BinaryData data = BinaryData.of(IOUtils.toByteArray(input), ContentType.APPLICATION_JSON);
-
-        // This ingester does bulk indexes
-        ingester.add(op -> op
-            .index(idx -> idx
-                .index(elasticSearchIndexName)
-                .document(data)));
-        /*
-         * The IndexRequest does single indexes
-         * IndexRequest entityRequest = IndexRequest.of(i -> i
-         * .index(elasticSearchIndexName)
-         * .withJson(input)
-         * );
-         * IndexResponse entityResponse = esClient.index(entityRequest);
-         */
-      }
-      ingester.close();
-      System.out.println("Finished indexing");
-
+    } catch (SzException e) {
+      System.out.println("Senzing error");
+      System.out.println("Error Code = " + e.getErrorCode());
+      System.out.println("Exception = " + e.getMessage());
+      e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
+      // close the Senzing environment
+      if (szEnvironment != null) {
+        System.out.println("Closing Senzing environment.");
+        szEnvironment.destroy();
+      }
     }
 
-    // close the G2 engine instance
-    System.out.println("Closing G2 engine interface.");
-    if (g2Engine != null) {
-      returnValue = g2Engine.destroy();
-      if (returnValue != 0) {
-        System.out.println("Could not disconnect from G2");
-        System.out.println("Return Code = " + returnValue);
-        System.out.println("Exception Code = " + g2Engine.getLastExceptionCode());
-        System.out.println("Exception = " + g2Engine.getLastException());
-        return;
-      }
-      g2Engine = null;
+    if (!success) {
+      System.out.println("****Program failed****");
+      System.exit(1);
     }
     System.out.println("****Program complete****");
     System.exit(0);
+  }
+
+  // Counts documents that were and weren't indexed so failures don't pass silently.
+  private static class BulkResultListener implements BulkListener<Void> {
+    private final AtomicLong indexedCount;
+    private final AtomicLong failedCount;
+
+    BulkResultListener(AtomicLong indexedCount, AtomicLong failedCount) {
+      this.indexedCount = indexedCount;
+      this.failedCount = failedCount;
+    }
+
+    @Override
+    public void beforeBulk(long executionId, BulkRequest request, List<Void> contexts) {
+    }
+
+    @Override
+    public void afterBulk(long executionId, BulkRequest request, List<Void> contexts, BulkResponse response) {
+      for (BulkResponseItem item : response.items()) {
+        if (item.error() != null) {
+          failedCount.incrementAndGet();
+          System.out.println("Failed to index document: " + item.error().reason());
+        } else {
+          indexedCount.incrementAndGet();
+        }
+      }
+    }
+
+    @Override
+    public void afterBulk(long executionId, BulkRequest request, List<Void> contexts, Throwable failure) {
+      failedCount.addAndGet(request.operations().size());
+      System.out.println("Bulk request failed: " + failure);
+    }
   }
 }
