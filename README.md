@@ -50,8 +50,8 @@ If the instructions are not clear, please let us know by opening a new
 
 ### Startup elasticsearch
 
-- Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration.
-  For more options, see [Install Elasticsearch with Docker] and [Install Kibana with Docker].
+1. Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration.
+   For more options, see [Install Elasticsearch with Docker] and [Install Kibana with Docker].
 
 1. :thinking: Create the docker network, unless it already exists (for example, it is created by `elasticsearch/docker-compose.yaml`).
 

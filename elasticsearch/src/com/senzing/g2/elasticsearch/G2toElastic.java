@@ -89,8 +89,8 @@ public class G2toElastic {
 
         System.out.println("Indexing entities");
         try {
-          for (String entity = szEngine.fetchNext(exportHandle); entity != null; entity = szEngine
-              .fetchNext(exportHandle)) {
+          String entity;
+          while ((entity = szEngine.fetchNext(exportHandle)) != null) {
             G2EntityData entityData = new G2EntityData(entity);
             BinaryData data = BinaryData.of(entityData.getRecordData().getBytes(StandardCharsets.UTF_8),
                 ContentType.APPLICATION_JSON);
@@ -113,6 +113,7 @@ public class G2toElastic {
       System.out.println("Senzing error");
       System.out.println("Error Code = " + e.getErrorCode());
       System.out.println("Exception = " + e.getMessage());
+      e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {

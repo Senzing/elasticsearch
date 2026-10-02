@@ -50,7 +50,7 @@ All the logic is in `G2toElastic.main` (package `com.senzing.g2.elasticsearch`):
 
 `JsonFieldValueFinder`, `G2RecordInfo.getElasticSearchRecordIdentifier` and `G2EntityData.getElasticSearchEntityIdentifier` are helpers that the current flow doesn't use.
 
-Documents are parsed and built with `jakarta.json` (the Parsson implementation comes in through `elasticsearch-java`). The Elasticsearch client serializes with its own Jackson mapper. It logs through SLF4J, which `slf4j-nop` silences.
+Documents are parsed and built with `jakarta.json`, with Parsson as the runtime implementation. Both are declared in `pom.xml`. The Elasticsearch client serializes with its own Jackson mapper. It logs through SLF4J, which `slf4j-nop` silences.
 
 ## Gotchas
 
