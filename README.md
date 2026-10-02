@@ -53,7 +53,7 @@ If the instructions are not clear, please let us know by opening a new
 1. Start an instance of elasticsearch and your favorite elastic search UI, kibana is recommended and will be assumed for the remainder of this demonstration.
    For more options, see [Install Elasticsearch with Docker] and [Install Kibana with Docker].
 
-1. :thinking: Create the docker network, unless it already exists (for example, it is created by `elasticsearch/docker-compose.yaml`).
+1. :thinking: Create the docker network unless it already exists (for example, if it was created by `elasticsearch/docker-compose.yaml`).
 
    ```console
    sudo docker network create senzing-network
@@ -194,7 +194,7 @@ If the instructions are not clear, please let us know by opening a new
    - The `Name` field can be set but is not required.
    - The indexed entities have no timestamp, so for `Timestamp field` select "--- I don't want to use the time filter ---".
 
-4. Press "Save data view to Kibana" at the bottom of the screen, now can view the created index and do searches. If fuzzy searches are needed click on the menu button to the left of the search bar, choose "Language" and switch the language to lucene. [Here] you can view the lucene syntax and how to do fuzzy searches
+4. Press "Save data view to Kibana" at the bottom of the screen. You can now view the created index and do searches. If fuzzy searches are needed click on the menu button to the left of the search bar, choose "Language" and switch the language to lucene. [Here] you can view the lucene syntax and how to do fuzzy searches
    <img width="246" alt="image" src="https://github.com/SamMacy/elasticsearch/assets/49598357/c77b8f8b-6877-4701-9677-511e5aafb81f">
 
 [Docker]: https://docs.docker.com/get-started/get-docker/
