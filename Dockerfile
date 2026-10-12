@@ -36,11 +36,11 @@ RUN SZ_SDK_VERSION="$(mvn -B -q help:evaluate -Dexpression=sz-sdk.version -Dforc
 
 FROM senzing_runtime
 
-ENV REFRESHED_AT=2026-10-08
+ENV REFRESHED_AT=2026-10-12
 
 LABEL Name="senzing/elasticsearch-v4" \
       Maintainer="support@senzing.com" \
-      Version="2.0.0"
+      Version="4.4.2"
 
 # Run as "root" for system installation.
 
